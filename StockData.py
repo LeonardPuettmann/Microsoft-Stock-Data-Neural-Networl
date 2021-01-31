@@ -26,6 +26,7 @@ def generate_series(data, value_num):
     return np.concatenate((i, np.transpose([has_dividends])),
                            axis=1), t
 
+# Normalizing the data
 inputs, targets = generate_series(history, 4)
 print(inputs[3818])
 
@@ -35,6 +36,7 @@ normalized_h = (history - h_min) / (history.max() - h_min)
 inputs, targets = generate_series(normalized_h, 4)
 print(inputs[3818])
 
+# Creating a Sequential Model with three layers
 def create_model(n):
     model = keras.Sequential([
     keras.layers.Dense(128, activation=tf.nn.tanh, input_shape=(n+1,)),
@@ -76,7 +78,7 @@ for k, v in trained_models.items():
     val_loss = train_history['val_loss'][-1]
     model_stats[k] = {'inputs': k, 'loss': loss, 'val_loss': val_loss}
 
-
+# Plotting out the test error
 val_loss = []
 indices = []
 for k, v in model_stats.items():
